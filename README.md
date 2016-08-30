@@ -11,7 +11,7 @@ Each customer, when he arrives, looks to see what the barber is doing. If the ba
 ## Usage
 
 `lein run` would run the code with the default settings.
-`sleeping-barber.core-test` namespace ensures some common-sense assumptions are hold true.
+`sleeping-barber.core-test` namespace ensures some common-sense assumptions.
 
 ## License
 
