@@ -1,8 +1,7 @@
 (ns sleeping-barber.core
   (:require [clojure.core.async
              :as async
-             :refer [>! <! >!! <!! go chan close! thread
-                     alts! alts!! timeout dropping-buffer]])
+             :refer [>! <! >!! <!! go chan close! thread alts!! timeout]])
   (:gen-class))
 
 
