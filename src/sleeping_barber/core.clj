@@ -1,7 +1,7 @@
 (ns sleeping-barber.core
   (:require [clojure.core.async
              :as async
-             :refer [>! <! >!! <!! go chan close! thread alts!! timeout]])
+             :refer [>! <! >!! <!! chan close! thread alts!! alts! timeout]])
   (:gen-class))
 
 
@@ -23,16 +23,17 @@
         serviced-customers (atom [])]
 
     ;; Customers coming to the barbershop
-    (go
+    (async/go
       (doseq [customer customer-queue]
         (let [arrival-interval (rand-int (:max-customer-arrival-period opts))]
           ;; wait some random interval before getting new customer
           (<!! (timeout arrival-interval))
           (println "New customer arrives: " customer)
-          (when-not (async/offer! clients-channel customer)
-            (println "Barber is busy, customer" customer
-                     "proceeds to waiting room")
-            (when-not (async/offer! seats-channel customer)
+          (let [[v c] (alts! [[clients-channel customer]
+                              [seats-channel customer]]
+                             :default "no seats"
+                             :priority true)]
+            (when (= c :default)
               (println "No chairs for customer" customer)))))
       (close! clients-channel)
       (close! seats-channel))

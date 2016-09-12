@@ -6,7 +6,7 @@
   (testing
       "when customers arrive in packs only :number-of-chairs+1 customers
   will be serviced"
-    (let [opts {:number-of-chairs (rand-int 10)
+    (let [opts {:number-of-chairs (rand-int 100)
                 :max-customer-arrival-period 0
                 :haircut-duration 100}
           number-of-customers (inc (:number-of-chairs opts))
@@ -20,7 +20,7 @@
     (let [opts {:number-of-chairs (rand-int 10)
                 :max-customer-arrival-period 100
                 :haircut-duration 0}
-          number-of-customers (+ (:number-of-chairs opts) 10)
+          number-of-customers (+ (:number-of-chairs opts) 100)
           serviced-customers (run (range number-of-customers) opts)]
       (is (= (count serviced-customers) number-of-customers))))
   
@@ -31,7 +31,7 @@
       (let [opts {:number-of-chairs (rand-int 10)
                   :max-customer-arrival-period 100
                   :haircut-duration 200}
-            number-of-customers (+ (:number-of-chairs opts) 10)
+            number-of-customers (+ (:number-of-chairs opts) 100)
             serviced-customers (run (range number-of-customers) opts)]
         (is (<= (count serviced-customers) (+ (/ number-of-customers 2)
                                               (:number-of-chairs opts)))))))
